@@ -31,7 +31,7 @@ view: events {
   dimension: country {
     type: string
     sql: ${TABLE}.country ;;
-#     map_layer_name:
+    map_layer_name: countries
   }
 
   dimension_group: created {
