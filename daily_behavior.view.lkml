@@ -12,7 +12,7 @@ view: daily_behavior {
     sql: ${TABLE}.country ;;
   }
 
-  dimension_group: date {
+  dimension_group: daily_behavior {
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.date ;;
@@ -57,4 +57,10 @@ view: daily_behavior {
     type: count
     drill_fields: [campaigns.name, campaigns.remote_campaign_id]
   }
+
+  measure: total_revenue {
+    type: sum
+    sql: ${revenue}   ;;
+  }
+
 }
