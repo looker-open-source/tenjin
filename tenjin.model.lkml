@@ -6,6 +6,25 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+explore: daily_spend {
+  join: campaigns {
+    type: left_outer
+    sql_on: ${daily_spend.campaign_id} = ${campaigns.remote_campaign_id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+}
 explore: daily_behavior {
   join: campaigns {
     type: left_outer
@@ -106,26 +125,6 @@ explore: daily_ad_revenue {
   join: apps {
     type: left_outer
     sql_on: ${publisher_apps.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
-}
-
-explore: daily_spend {
-  join: campaigns {
-    type: left_outer
-    sql_on: ${daily_spend.campaign_id} = ${campaigns.remote_campaign_id} ;;
-    relationship: many_to_one
-  }
-
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
-
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
     relationship: many_to_one
   }
 }

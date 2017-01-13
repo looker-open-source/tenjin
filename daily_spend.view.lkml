@@ -18,7 +18,7 @@ view: daily_spend {
     sql: ${TABLE}.clicks ;;
   }
 
-  dimension_group: date {
+  dimension_group: daily_spend {
     type: time
     timeframes: [date, week, month]
     convert_tz: no
@@ -32,6 +32,7 @@ view: daily_spend {
 
   dimension: installs {
     type: number
+    hidden: yes
     sql: ${TABLE}.installs ;;
   }
 
@@ -49,5 +50,15 @@ view: daily_spend {
   measure: count {
     type: count
     drill_fields: [id, campaigns.name, campaigns.remote_campaign_id]
+  }
+
+  measure:  total_spend {
+    type: sum
+    sql:  ${spend} ;;
+  }
+
+  measure: total_installs {
+    type:  sum
+    sql:  ${installs} ;;
   }
 }
