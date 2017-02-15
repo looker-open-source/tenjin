@@ -1,5 +1,5 @@
 view: campaigns {
-  sql_table_name: e9c99ee016bbd36d3081045bb02d600a.campaigns ;;
+  sql_table_name: "883d44d664a54beb94e411f1a4e76004".campaigns ;;
 
   dimension: remote_campaign_id {
     primary_key: yes

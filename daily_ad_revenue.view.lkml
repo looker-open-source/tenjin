@@ -1,5 +1,5 @@
 view: daily_ad_revenue {
-  sql_table_name: e9c99ee016bbd36d3081045bb02d600a.daily_ad_revenue ;;
+  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_ad_revenue ;;
 
   dimension: id {
     primary_key: yes

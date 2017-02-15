@@ -1,5 +1,5 @@
 view: daily_spend {
-  sql_table_name: e9c99ee016bbd36d3081045bb02d600a.daily_spend ;;
+  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_spend ;;
 
   dimension: id {
     primary_key: yes
@@ -54,7 +54,8 @@ view: daily_spend {
 
   measure:  total_spend {
     type: sum
-    sql:  ${spend} ;;
+    value_format: "$0"
+    sql:  ${spend}/100.0 ;;
   }
 
   measure: total_installs {

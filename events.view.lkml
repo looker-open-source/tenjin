@@ -1,5 +1,6 @@
 view: events {
-  sql_table_name: e9c99ee016bbd36d3081045bb02d600a.events ;;
+  sql_table_name: "883d44d664a54beb94e411f1a4e76004".events
+    ;;
 
   dimension_group: acquired {
     type: time
@@ -14,7 +15,7 @@ view: events {
 
   dimension: app_id {
     type: string
-    # hidden: true
+    # hidden: yes
     sql: ${TABLE}.app_id ;;
   }
 
@@ -31,7 +32,6 @@ view: events {
   dimension: country {
     type: string
     sql: ${TABLE}.country ;;
-    map_layer_name: countries
   }
 
   dimension_group: created {
@@ -122,6 +122,5 @@ view: events {
 
   measure: count {
     type: count
-    drill_fields: [apps.id, apps.name]
   }
 }

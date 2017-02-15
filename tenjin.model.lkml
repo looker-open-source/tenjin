@@ -1,4 +1,4 @@
-connection: "simplehabit"
+connection: "demo"
 
 # include all the views
 include: "*.view"
