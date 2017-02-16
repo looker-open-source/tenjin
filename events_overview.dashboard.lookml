@@ -7,6 +7,8 @@
     height: 175
   - elements: [dau_and_rev]
     height: 300
+  - elements: [monthly]
+    height: 100
   - elements: [mau_pay, mau_platform]
     height: 300
 
@@ -276,6 +278,9 @@
       measures: [events.distinct_users]
       filters:
         events.created_date: 12 months
+      listen:
+        platform: events.platform
+        bundle_id: events.bundle_id
       sorts: [events.created_month, events.platform 0]
       limit: '500'
       column_limit: '50'
@@ -326,6 +331,9 @@
       measures: [events.distinct_users, events.payers]
       filters:
         events.created_date: 12 months
+      listen:
+        platform: events.platform
+        bundle_id: events.bundle_id
       sorts: [events.created_month]
       limit: '500'
       column_limit: '50'
@@ -370,3 +378,8 @@
       column_group_spacing_ratio: ''
       series_labels:
         events.distinct_users: Monthly Active Users
+
+    - name: monthly
+      type: text
+      title_text: 'Monthly Review'
+      subtitle_text: 'Past 12 Months'
