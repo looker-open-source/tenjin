@@ -45,6 +45,24 @@ explore: daily_behavior {
   }
 }
 
+explore: events {
+  join: apps {
+    type: left_outer
+    sql_on: ${events.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+  join: campaigns {
+    type: left_outer
+    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+}
+
 explore: ad_networks {}
 
 explore: apps {}
@@ -125,14 +143,6 @@ explore: daily_ad_revenue {
   join: apps {
     type: left_outer
     sql_on: ${publisher_apps.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
-}
-
-explore: events {
-  join: apps {
-    type: left_outer
-    sql_on: ${events.app_id} = ${apps.id} ;;
     relationship: many_to_one
   }
 }

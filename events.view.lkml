@@ -4,7 +4,7 @@ view: events {
 
   dimension_group: acquired {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [time, date, week, month, raw]
     sql: ${TABLE}.acquired_at ;;
   }
 
@@ -36,7 +36,7 @@ view: events {
 
   dimension_group: created {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [time, date, week, month, raw]
     sql: ${TABLE}.created_at ;;
   }
 
@@ -110,17 +110,57 @@ view: events {
     sql: ${TABLE}.source_campaign_id ;;
   }
 
-  dimension: total_revenue {
-    type: number
-    sql: ${TABLE}.total_revenue ;;
-  }
+#   dimension: total_revenue {
+#     type: number
+#     sql: ${TABLE}.total_revenue ;;
+#   }
 
   dimension: value {
     type: number
     sql: ${TABLE}.value ;;
   }
 
+  dimension:  days_until_acquisition {
+    type:  number
+    sql:  date_diff('day',${acquired_raw},${created_raw}) ;;
+  }
+
+  dimension: days_until_acquisition_cohorts {
+    type: tier
+    sql: ${days_until_acquisition} ;;
+    tiers: [7, 30, 60, 90, 120]
+    style: integer}
+
   measure: count {
     type: count
+  }
+
+  measure:  distinct_users {
+    type: count_distinct
+    sql:  ${advertising_id} ;;
+  }
+
+  measure: payers {
+    type: count_distinct
+    sql: ${advertising_id} ;;
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+  }
+  measure: total_revenue {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+  }
+
+  measure:  revenue_per_payer {
+    type:  number
+    sql: ${total_revenue}::float/NULLIF(${payers},0) ;;
+    value_format_name: usd
   }
 }
