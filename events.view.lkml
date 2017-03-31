@@ -148,6 +148,7 @@ view: events {
       value: "purchase"
     }
   }
+
   measure: total_revenue {
     type: sum
     sql:  ${revenue}/100.0 ;;
@@ -162,5 +163,128 @@ view: events {
     type:  number
     sql: ${total_revenue}::float/NULLIF(${payers},0) ;;
     value_format_name: usd
+  }
+
+  dimension: created_acquired_diff {
+    type: number
+    sql: ${created_date} - ${acquired_date};;
+  }
+
+  dimension:created_acquired_diff_tier {
+    type: tier
+    sql: ${created_acquired_diff} ;;
+    tiers: [1,2,3,7,14,21,28,90]
+  }
+
+  measure: total_revenue_d01 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: "1"
+    }
+  }
+
+  measure: total_revenue_d02 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: "1,2"
+    }
+  }
+
+  measure: total_revenue_d03 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: "1,2,3"
+    }
+  }
+
+  measure: total_revenue_d07 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: ">=1 AND <=7"
+    }
+  }
+
+  measure: total_revenue_d14 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: ">=1 AND <=14"
+    }
+  }
+
+  measure: total_revenue_d21 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: ">=1 AND <=21"
+    }
+  }
+
+  measure: total_revenue_d28 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: ">=1 AND <=28"
+    }
+  }
+
+  measure: total_revenue_d90 {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    value_format_name: usd
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: ">=1 AND <=90"
+    }
   }
 }
