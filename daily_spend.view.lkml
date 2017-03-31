@@ -54,12 +54,19 @@ view: daily_spend {
 
   measure:  total_spend {
     type: sum
-    value_format: "$0"
+    value_format_name: usd
     sql:  ${spend}/100.0 ;;
   }
 
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
+  }
+
+  measure: cost_per_install {
+    type: number
+    sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
+    value_format_name: usd
+
   }
 }

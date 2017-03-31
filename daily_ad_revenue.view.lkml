@@ -50,4 +50,14 @@ view: daily_ad_revenue {
     type: count
     drill_fields: [id, publisher_apps.id, publisher_apps.name]
   }
+
+  measure: total_revenue {
+    type:  sum
+    sql:  ${revenue} ;;
+  }
+
+  measure:  total_impressions {
+    type:  sum
+    sql: ${impressions} ;;
+  }
 }
