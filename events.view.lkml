@@ -125,6 +125,11 @@ view: events {
     sql:  date_diff('day',${acquired_raw},${created_raw}) ;;
   }
 
+  dimension: created_now_diff {
+    type: number
+    sql: date_diff('sec', ${created_raw}, getdate()) ;;
+  }
+
   dimension: days_until_acquisition_cohorts {
     type: tier
     sql: ${days_until_acquisition} ;;
@@ -165,9 +170,17 @@ view: events {
     value_format_name: usd
   }
 
+  measure: total_purchases {
+    type: count
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+  }
+
   dimension: created_acquired_diff {
     type: number
-    sql: ${created_date} - ${acquired_date};;
+    sql: date_diff('sec', ${acquired_raw}, ${created_raw})/86400;;
   }
 
   dimension:created_acquired_diff_tier {
@@ -200,7 +213,7 @@ view: events {
     }
     filters: {
       field: created_acquired_diff
-      value: "1,2"
+      value: ">=1 AND <=3"
     }
   }
 
@@ -214,7 +227,7 @@ view: events {
     }
     filters: {
       field: created_acquired_diff
-      value: "1,2,3"
+      value: ">=1 AND <=3"
     }
   }
 
@@ -285,6 +298,71 @@ view: events {
     filters: {
       field: created_acquired_diff
       value: ">=1 AND <=90"
+    }
+  }
+
+  measure: leading_30_day_revenue {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: "<=30"
+    }
+  }
+  measure: trailing_30_day_revenue {
+    type: sum
+    sql:  ${revenue}/100.0 ;;
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_now_diff
+      value: "<=30"
+    }
+  }
+
+  measure: leading_30_day_purchases {
+    type: count
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_acquired_diff
+      value: "<=30"
+    }
+  }
+  measure: trailing_30_day_purchases {
+    type: count
+    filters: {
+      field: event_type
+      value: "purchase"
+    }
+    filters: {
+      field: created_now_diff
+      value: "<=30"
+    }
+  }
+
+  measure: days_returned {
+    type: count_distinct
+    sql: ${created_date} ;;
+    filters: {
+      field: event
+      value: "open"
+    }
+  }
+
+  measure: sessions {
+    type: count
+    filters: {
+      field: event
+      value: "open"
     }
   }
 }

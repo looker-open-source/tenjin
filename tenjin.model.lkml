@@ -25,6 +25,34 @@ explore: daily_spend {
     relationship: many_to_one
   }
 }
+explore: daily_user_metrics {
+
+  join: daily_spend {
+    type: full_outer
+    sql_on: ${daily_user_metrics.acquired_date} = ${daily_spend.daily_spend_date} and
+            ${daily_user_metrics.campaign_id} = ${daily_spend.campaign_id};;
+    relationship: many_to_one
+  }
+
+  join: campaigns {
+    type: left_outer
+    sql: coalesce(${daily_user_metrics.campaign_id}, ${daily_spend.campaign_id}) = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+}
+
 explore: daily_behavior {
   join: campaigns {
     type: left_outer
@@ -59,6 +87,11 @@ explore: events {
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+  join: user_event_facts {
+    type: left_outer
+    sql_on: ${events.advertising_id} = ${user_event_facts.advertising_id} ;;
     relationship: many_to_one
   }
 }
