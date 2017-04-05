@@ -16,6 +16,13 @@
   - elements: [campaign_metrics, campaign_roi]
     height: 350
 
+  filters:
+
+  - name: date
+    title: 'Date Range'
+    type: date_filter
+    default_value: 2016/09/26 to 2016/12/12
+
   elements:
     - name: total_spend
       title: Total Spend
@@ -23,8 +30,8 @@
       model: tenjin
       explore: daily_user_metrics
       measures: [daily_spend.total_spend]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -63,8 +70,8 @@
         expression: "(${daily_user_metrics.total_revenue} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
         value_format:
         value_format_name: percent_0
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -98,8 +105,8 @@
       model: tenjin
       explore: daily_user_metrics
       measures: [daily_spend.total_installs]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -138,8 +145,8 @@
         expression: "${daily_user_metrics.total_new_users}/${daily_spend.total_installs}"
         value_format:
         value_format_name: percent_0
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -176,8 +183,8 @@
       fill_fields: [daily_spend.daily_spend_week]
       measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users,
         daily_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_spend.daily_spend_week]
       limit: '500'
       column_limit: '50'
@@ -207,8 +214,8 @@
       measures: [events.total_revenue_d01, events.total_revenue_d02, events.total_revenue_d03,
         events.total_revenue_d07, events.total_revenue_d14, events.total_revenue_d21,
         events.total_revenue_d28, events.total_revenue_d90]
-      filters:
-        events.acquired_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: events.acquired_date
       sorts: [events.acquired_week]
       limit: '500'
       column_limit: '50'
@@ -265,8 +272,8 @@
       dimensions: [daily_spend.daily_spend_week]
       fill_fields: [daily_spend.daily_spend_week]
       measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_spend.daily_spend_week]
       limit: '500'
       column_limit: '50'
@@ -315,8 +322,8 @@
       type: table
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_user_metrics.acquired_week]
-      fill_fields: [daily_user_metrics.acquired_week]
+      dimensions: [daily_spend.daily_spend_week]
+      fill_fields: [daily_spend.daily_spend_week]
       measures: [daily_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
         daily_user_metrics.revenue_d03, daily_user_metrics.revenue_d07, daily_user_metrics.revenue_d14,
         daily_user_metrics.revenue_d21, daily_user_metrics.revenue_d28, daily_user_metrics.revenue_d90]
@@ -361,9 +368,9 @@
         expression: "(${daily_user_metrics.revenue_d90} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
         value_format:
         value_format_name: percent_1
-      filters:
-        daily_user_metrics.acquired_date: 2016/09/26 to 2016/12/12
-      sorts: [daily_user_metrics.acquired_week]
+      listen:
+        date: daily_spend.daily_spend_date
+      sorts: [daily_spend.daily_spend_week]
       limit: '500'
       column_limit: '50'
       show_view_names: false
@@ -418,8 +425,8 @@
       pivots: [daily_user_metrics.campaign_id]
       fill_fields: [daily_spend.daily_spend_week]
       measures: [daily_user_metrics.total_revenue]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_spend.daily_spend_week, daily_user_metrics.campaign_id]
       limit: '500'
       column_limit: '50'
@@ -472,8 +479,8 @@
       pivots: [daily_user_metrics.campaign_id]
       fill_fields: [daily_spend.daily_spend_week]
       measures: [daily_spend.total_spend]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_user_metrics.campaign_id, daily_spend.daily_spend_week desc]
       limit: '500'
       column_limit: '50'
@@ -525,8 +532,8 @@
       dimensions: [daily_user_metrics.campaign_id]
       measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users,
         daily_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_spend.total_spend desc]
       limit: '500'
       column_limit: '50'
@@ -623,8 +630,8 @@
         expression: "(${daily_user_metrics.revenue_d90} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
         value_format:
         value_format_name: percent_1
-      filters:
-        daily_spend.daily_spend_date: 2016/09/26 to 2016/12/12
+      listen:
+        date: daily_spend.daily_spend_date
       sorts: [daily_spend.total_spend desc]
       limit: '500'
       column_limit: '50'
