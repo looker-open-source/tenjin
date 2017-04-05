@@ -36,7 +36,7 @@ explore: daily_user_metrics {
 
   join: campaigns {
     type: left_outer
-    sql: coalesce(${daily_user_metrics.campaign_id}, ${daily_spend.campaign_id}) = ${campaigns.id} ;;
+    sql_on: coalesce(${daily_user_metrics.campaign_id}, ${daily_spend.campaign_id}) = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
