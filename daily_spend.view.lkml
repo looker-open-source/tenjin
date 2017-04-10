@@ -83,4 +83,18 @@ view: daily_spend {
     sql: ${clicks} ;;
   }
 
+  measure: cost_per_click {
+    type: number
+    label: "CPC"
+    sql: ${total_spend}::float/NULLIF(${total_clicks} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: click_through_rate {
+    type: number
+    label: "CTR"
+    sql:  ${total_clicks}::float/NULLIF(${total_impressions},0);;
+    value_format_name: percent_2
+  }
+
 }
