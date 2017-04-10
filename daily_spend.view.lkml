@@ -15,6 +15,7 @@ view: daily_spend {
 
   dimension: clicks {
     type: number
+    hidden: yes
     sql: ${TABLE}.clicks ;;
   }
 
@@ -27,6 +28,7 @@ view: daily_spend {
 
   dimension: impressions {
     type: number
+    hidden: yes
     sql: ${TABLE}.impressions ;;
   }
 
@@ -38,6 +40,7 @@ view: daily_spend {
 
   dimension: spend {
     type: number
+    hidden: yes
     sql: ${TABLE}.spend ;;
   }
 
@@ -69,4 +72,15 @@ view: daily_spend {
     value_format_name: usd
 
   }
+
+  measure:  total_impressions {
+    type:  sum
+    sql: ${impressions} ;;
+  }
+
+  measure: total_clicks {
+    type:  sum
+    sql: ${clicks} ;;
+  }
+
 }
