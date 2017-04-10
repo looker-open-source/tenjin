@@ -86,7 +86,7 @@ view: daily_spend {
   measure: cost_per_click {
     type: number
     label: "CPC"
-    sql: ${total_spend}::float/NULLIF(${total_clicks} ;;
+    sql: ${total_spend}::float/NULLIF(${total_clicks},0) ;;
     value_format_name: decimal_2
   }
 
