@@ -4,7 +4,7 @@ connection: "demo"
 include: "*.view"
 
 # include all the dashboards
-include: "*.dashboard"
+include: "*.dashboard" #comment
 
 explore: daily_spend {
   join: campaigns {
