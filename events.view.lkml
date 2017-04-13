@@ -145,6 +145,11 @@ view: events {
     sql:  ${advertising_id} ;;
   }
 
+  measure: tracked_installs {
+    type: count_distinct
+    sql: coalesce(${advertising_id},${developer_device_id}) ;;
+  }
+
   measure: payers {
     type: count_distinct
     sql: ${advertising_id} ;;

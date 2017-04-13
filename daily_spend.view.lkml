@@ -21,7 +21,7 @@ view: daily_spend {
 
   dimension_group: daily_spend {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date, week, month, day_of_week, raw]
     convert_tz: no
     sql: ${TABLE}.date ;;
   }

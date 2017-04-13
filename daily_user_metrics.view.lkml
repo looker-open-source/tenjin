@@ -6,6 +6,7 @@ view: daily_user_metrics {
       , source_campaign_id             AS campaign_id
       , count(DISTINCT CASE WHEN event = 'open' and datediff('sec', acquired_at, created_at) < 86400 THEN advertising_id ELSE NULL END) AS new_users
       , count(distinct advertising_id) as users
+      , count(distinct coalesce(advertising_id, developer_device_id)) as tracked_installs
       , sum(case when event_type = 'purchase' then revenue else 0 end) as revenue
       , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 = 1 then revenue else 0 end) as revenue_d1
       , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 2  then revenue else 0 end) as revenue_d2
@@ -26,8 +27,14 @@ view: daily_user_metrics {
 
   dimension_group: acquired {
     type: time
-    timeframes: [date, week, month, year]
+    timeframes: [date, week, month, year, raw]
     sql: ${TABLE}.date ;;
+  }
+
+  dimension_group: user_metrics {
+    type: time
+    timeframes: [date, week, month, year]
+    sql:  coalesce(${acquired_raw},${daily_spend.daily_spend_raw});;
   }
 
   dimension: campaign_id {
@@ -52,8 +59,25 @@ view: daily_user_metrics {
   }
 
   measure: users {
-    type: number
+    type: sum
     sql: ${TABLE}.users ;;
+  }
+
+  measure: tracked_installs {
+    type: sum
+    sql: ${TABLE}.tracked_installs ;;
+  }
+
+  measure: cost_per_tracked_install {
+    type: number
+    value_format_name: usd
+    sql: ${daily_spend.total_spend}::float/NULLIF(${tracked_installs},0) ;;
+  }
+
+  measure: tracked_installs_per_click {
+    type: number
+    value_format_name: percent_2
+    sql: ${daily_spend.total_clicks}::float/NULLIF(${tracked_installs},0) ;;
   }
 
   dimension: new_campaign_day_users {
@@ -163,5 +187,9 @@ view: daily_user_metrics {
     type: number
     sql:  ${country_spend}::float/NULLIF(${country_installs},0);;
     view_label: "Geography Metrics"
+  }
+
+  measure: count {
+    type: count
   }
 }
