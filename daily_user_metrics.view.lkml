@@ -1,7 +1,7 @@
 view: daily_user_metrics {
   derived_table: {
     sql: SELECT
-        acquired_at::DATE              AS date
+        date_add('hour', 9, acquired_at) ::DATE              AS date
       , country                        AS country
       , source_campaign_id             AS campaign_id
       , count(DISTINCT CASE WHEN event = 'open' and datediff('sec', acquired_at, created_at) < 86400 THEN advertising_id ELSE NULL END) AS new_users
@@ -21,7 +21,7 @@ view: daily_user_metrics {
       , sum(count(distinct advertising_id)) over (partition by acquired_at::date, source_campaign_id) as new_campaign_day_users
       , sum(count(distinct CASE WHEN event = 'open' and datediff('sec', acquired_at, created_at) < 86400 THEN advertising_id ELSE NULL END)) over (partition by acquired_at::date, source_campaign_id) as campaign_day_users
     FROM events
-    GROUP BY 1, 2, 3
+    GROUP BY acquired_at, country, source_campaign_id
  ;;
   }
 
