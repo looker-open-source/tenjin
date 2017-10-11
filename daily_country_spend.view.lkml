@@ -55,6 +55,17 @@ view: daily_country_spend {
           END;;
     }
 
+  dimension: spend_usd {
+    type: number
+    hidden: yes
+    sql: CASE
+          WHEN ${agency_margin.type} = 0
+            THEN spend/112.0 /(1-coalesce(${agency_margin.agency_margin},0.15))
+          WHEN ${agency_margin.type} = 1
+            THEN spend/112.0 * (1 + coalesce(${agency_margin.agency_margin},0.15))
+          END;;
+  }
+
   dimension_group: updated {
     type: time
     timeframes: [time, date, week, month]
@@ -73,6 +84,13 @@ view: daily_country_spend {
     label: "Cost"
   }
 
+  measure:  total_spend_usd {
+    type: sum
+    value_format_name: "usd"
+    sql:  ${spend_usd};;
+    label: "Cost"
+  }
+
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
@@ -83,6 +101,13 @@ view: daily_country_spend {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
     value_format: "\"¥\"#,##0"
+    label: "CPA(Media)"
+  }
+
+  measure: cost_per_install_usd {
+    type: number
+    sql: ${total_spend_usd}::float/NULLIF(${total_installs},0) ;;
+    value_format_name: "usd"
     label: "CPA(Media)"
   }
 
@@ -102,6 +127,13 @@ view: daily_country_spend {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_clicks},0) ;;
     value_format: "\"¥\"#,##0"
+    label: "CPC"
+  }
+
+  measure: cost_per_click_usd {
+    type: number
+    sql: ${total_spend_usd}::float/NULLIF(${total_clicks},0) ;;
+    value_format_name: "usd"
     label: "CPC"
   }
 

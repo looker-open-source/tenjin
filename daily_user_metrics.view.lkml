@@ -76,6 +76,13 @@ view: daily_user_metrics {
     label: "CPA(SDK)"
   }
 
+  measure: cost_per_tracked_install_usd {
+    type: number
+    value_format_name: "usd"
+    sql: ${daily_country_spend.total_spend_usd}::float/NULLIF(${tracked_installs},0) ;;
+    label: "CPA(SDK)"
+  }
+
   measure: tracked_installs_per_click {
     type: number
     value_format_name: percent_2
