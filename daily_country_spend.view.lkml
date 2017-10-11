@@ -1,6 +1,5 @@
-view: daily_spend {
-  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_spend
-    ;;
+view: daily_country_spend {
+  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_country_spend ;;
 
   dimension: id {
     primary_key: yes
@@ -26,7 +25,7 @@ view: daily_spend {
     sql: ${TABLE}.clicks ;;
   }
 
-  dimension_group: daily_spend {
+  dimension_group: daily_country_spend {
     type: time
     timeframes: [date, week, month, day_of_week, raw]
     convert_tz: no
@@ -48,8 +47,13 @@ view: daily_spend {
   dimension: spend {
     type: number
     hidden: yes
-    sql: ${TABLE}.spend;;
-  }
+    sql: CASE
+          WHEN ${agency_margin.type} = 0
+            THEN spend /(1-coalesce(${agency_margin.agency_margin},0.15))
+          WHEN ${agency_margin.type} = 1
+            THEN spend * (1 + coalesce(${agency_margin.agency_margin},0.15))
+          END;;
+    }
 
   dimension_group: updated {
     type: time

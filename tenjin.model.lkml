@@ -6,10 +6,10 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard" #comment
 
-explore: daily_spend {
+explore: daily_country_spend {
   join: campaigns {
     type: left_outer
-    sql_on: ${daily_spend.campaign_id} = ${campaigns.remote_campaign_id} ;;
+    sql_on: ${daily_country_spend.campaign_id} = ${campaigns.remote_campaign_id} ;;
     relationship: many_to_one
   }
 
@@ -22,21 +22,34 @@ explore: daily_spend {
   join: apps {
     type: left_outer
     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: advertisers {
+    type: left_outer
+    sql_on: ${apps.bundle_id} = ${advertisers.bundle_id} and ${apps.platform} = ${advertisers.platform} ;;
+    relationship: many_to_one
+  }
+
+  join: agency_margin {
+    type: left_outer
+    sql_on: ${advertisers.advertiser_id} = ${agency_margin.advertiser_id};;
     relationship: many_to_one
   }
 }
 explore: daily_user_metrics {
 
-  join: daily_spend {
+  join: daily_country_spend {
     type: full_outer
-    sql_on: ${daily_user_metrics.acquired_date} = ${daily_spend.daily_spend_date} and
-            ${daily_user_metrics.campaign_id} = ${daily_spend.campaign_id};;
+    sql_on: ${daily_user_metrics.acquired_date} = ${daily_country_spend.daily_country_spend_date} and
+            ${daily_user_metrics.campaign_id} = ${daily_country_spend.campaign_id} and
+            ${daily_user_metrics.country} = ${daily_country_spend.country};;
     relationship: many_to_one
   }
 
   join: campaigns {
     type: left_outer
-    sql_on: coalesce(${daily_user_metrics.campaign_id}, ${daily_spend.campaign_id}) = ${campaigns.id} ;;
+    sql_on: coalesce(${daily_user_metrics.campaign_id}, ${daily_country_spend.campaign_id}) = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
@@ -49,6 +62,18 @@ explore: daily_user_metrics {
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+  join: advertisers {
+    type: left_outer
+    sql_on: ${apps.bundle_id} = ${advertisers.bundle_id} and ${apps.platform} = ${advertisers.platform} ;;
+    relationship: many_to_one
+  }
+
+  join: agency_margin {
+    type: left_outer
+    sql_on: ${advertisers.advertiser_id} = ${agency_margin.advertiser_id};;
     relationship: many_to_one
   }
 }

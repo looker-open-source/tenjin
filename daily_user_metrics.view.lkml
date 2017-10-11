@@ -34,7 +34,7 @@ view: daily_user_metrics {
   dimension_group: user_metrics {
     type: time
     timeframes: [date, week, month, year]
-    sql:  coalesce(${acquired_raw},${daily_spend.daily_spend_raw});;
+    sql:  coalesce(${acquired_raw},${daily_country_spend.daily_country_spend_raw});;
   }
 
   dimension: campaign_id {
@@ -54,9 +54,9 @@ view: daily_user_metrics {
 
   measure: cost_per_new_user {
     type: number
-    sql: ${daily_spend.total_spend}::float/NULLIF(${total_new_users},0) ;;
-    value_format_name: usd
-  }
+    sql: ${daily_country_spend.total_spend}::float/NULLIF(${total_new_users},0) ;;
+    value_format: "\"¥\"#,##0"
+    }
 
   measure: users {
     type: sum
@@ -66,18 +66,21 @@ view: daily_user_metrics {
   measure: tracked_installs {
     type: sum
     sql: ${TABLE}.tracked_installs ;;
+    label: "CVs(SDK)"
   }
 
   measure: cost_per_tracked_install {
     type: number
-    value_format_name: usd
-    sql: ${daily_spend.total_spend}::float/NULLIF(${tracked_installs},0) ;;
+    value_format: "\"¥\"#,##0"
+    sql: ${daily_country_spend.total_spend}::float/NULLIF(${tracked_installs},0) ;;
+    label: "CPA(SDK)"
   }
 
   measure: tracked_installs_per_click {
     type: number
     value_format_name: percent_2
-    sql: ${daily_spend.total_clicks}::float/NULLIF(${tracked_installs},0) ;;
+    sql: ${daily_country_spend.total_clicks}::float/NULLIF(${tracked_installs},0) ;;
+    label: "CVR(SDK)"
   }
 
   dimension: new_campaign_day_users {
@@ -158,13 +161,13 @@ view: daily_user_metrics {
 
   dimension: country {
     type: string
-    sql: ${TABLE}.country ;;
+    sql: coalesce(${TABLE}.country, ${daily_country_spend.country}) ;;
     view_label: "Geography Metrics"
   }
 
   measure: country_spend {
     type: sum
-    sql: ((${daily_spend.spend} * ${new_users}) / ${campaign_day_users})/100.0 ;;
+    sql: ((${daily_country_spend.spend} * ${new_users}) / ${campaign_day_users})/100.0 ;;
     value_format_name: usd
     view_label: "Geography Metrics"
     description: "Spend by country is allocated by the proportion of acquired users in that country on that day of spend."
@@ -178,7 +181,7 @@ view: daily_user_metrics {
 
   measure: country_installs {
     type: sum
-    sql: ((${daily_spend.installs} * ${new_users}) / ${campaign_day_users}) ;;
+    sql: ((${daily_country_spend.installs} * ${new_users}) / ${campaign_day_users}) ;;
     view_label: "Geography Metrics"
     description: "Installs by country is allocated by the proportion of acquired users in that country on that day of install."
   }

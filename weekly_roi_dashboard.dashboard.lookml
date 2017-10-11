@@ -29,9 +29,9 @@
       type: single_value
       model: tenjin
       explore: daily_user_metrics
-      measures: [daily_spend.total_spend]
+      measures: [daily_country_spend.total_spend]
       listen:
-        date: daily_spend.daily_spend_date
+        date: daily_country_spend.daily_country_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -53,8 +53,8 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types: {}
 
@@ -63,15 +63,15 @@
       type: single_value
       model: tenjin
       explore: daily_user_metrics
-      measures: [daily_user_metrics.total_revenue, daily_spend.total_spend]
+      measures: [daily_user_metrics.total_revenue, daily_country_spend.total_spend]
       dynamic_fields:
       - table_calculation: roi
         label: ROI
-        expression: "(${daily_user_metrics.total_revenue} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.total_revenue} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_0
       listen:
-        date: daily_spend.daily_spend_date
+        date: daily_country_spend.daily_country_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -93,20 +93,20 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types: {}
-      hidden_fields: [daily_spend.total_spend]
+      hidden_fields: [daily_country_spend.total_spend]
 
     - name: total_installs
       title: Total Installs
       type: single_value
       model: tenjin
       explore: daily_user_metrics
-      measures: [daily_spend.total_installs]
+      measures: [daily_country_spend.total_installs]
       listen:
-        date: daily_spend.daily_spend_date
+        date: daily_country_spend.daily_country_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -128,8 +128,8 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types: {}
 
@@ -138,15 +138,15 @@
       type: single_value
       model: tenjin
       explore: daily_user_metrics
-      measures: [daily_spend.total_installs, daily_user_metrics.total_new_users]
+      measures: [daily_country_spend.total_installs, daily_user_metrics.total_new_users]
       dynamic_fields:
       - table_calculation: conversion_from_installs
         label: Conversion from Installs
-        expression: "${daily_user_metrics.total_new_users}/${daily_spend.total_installs}"
+        expression: "${daily_user_metrics.total_new_users}/${daily_country_spend.total_installs}"
         value_format:
         value_format_name: percent_0
       listen:
-        date: daily_spend.daily_spend_date
+        date: daily_country_spend.daily_country_spend_date
       limit: '500'
       column_limit: '50'
       custom_color_enabled: false
@@ -168,24 +168,24 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types: {}
-      hidden_fields: [daily_spend.total_installs]
+      hidden_fields: [daily_country_spend.total_installs]
 
     - name: weekly_kpi_overview
       title: Weekly KPI Overview
       type: table
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_spend.daily_spend_week]
-      fill_fields: [daily_spend.daily_spend_week]
-      measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users,
-        daily_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
+      dimensions: [daily_country_spend.daily_country_spend_week]
+      fill_fields: [daily_country_spend.daily_country_spend_week]
+      measures: [daily_country_spend.total_spend, daily_country_spend.total_installs, daily_user_metrics.total_new_users,
+        daily_country_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.daily_spend_week]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.daily_country_spend_week]
       limit: '500'
       column_limit: '50'
       show_view_names: false
@@ -200,8 +200,8 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
 
     - name: cumulative_rev_wk
@@ -269,12 +269,12 @@
       type: looker_line
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_spend.daily_spend_week]
-      fill_fields: [daily_spend.daily_spend_week]
-      measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users]
+      dimensions: [daily_country_spend.daily_country_spend_week]
+      fill_fields: [daily_country_spend.daily_country_spend_week]
+      measures: [daily_country_spend.total_spend, daily_country_spend.total_installs, daily_user_metrics.total_new_users]
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.daily_spend_week]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.daily_country_spend_week]
       limit: '500'
       column_limit: '50'
       stacking: ''
@@ -307,70 +307,70 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types:
-        daily_spend.total_spend: area
+        daily_country_spend.total_spend: area
       colors: ['palette: Mixed Dark']
       series_colors:
         daily_user_metrics.total_new_users: "#33a02c"
-        daily_spend.total_spend: "#cbd9e1"
+        daily_country_spend.total_spend: "#cbd9e1"
 
     - name: roi_table
       title: ROI
       type: table
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_spend.daily_spend_week]
-      fill_fields: [daily_spend.daily_spend_week]
-      measures: [daily_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
+      dimensions: [daily_country_spend.daily_country_spend_week]
+      fill_fields: [daily_country_spend.daily_country_spend_week]
+      measures: [daily_country_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
         daily_user_metrics.revenue_d03, daily_user_metrics.revenue_d07, daily_user_metrics.revenue_d14,
         daily_user_metrics.revenue_d21, daily_user_metrics.revenue_d28, daily_user_metrics.revenue_d90]
       dynamic_fields:
       - table_calculation: roi_d1
         label: ROI% D1
-        expression: "(${daily_user_metrics.revenue_d01} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d01} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d2
         label: ROI% D2
-        expression: "(${daily_user_metrics.revenue_d02} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d02} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d3
         label: ROI% D3
-        expression: "(${daily_user_metrics.revenue_d03} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d03} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d7
         label: ROI% D7
-        expression: "(${daily_user_metrics.revenue_d07} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d07} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d14
         label: ROI% D14
-        expression: "(${daily_user_metrics.revenue_d14} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d14} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d21
         label: ROI% D21
-        expression: "(${daily_user_metrics.revenue_d21} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d21} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d28
         label: ROI% D28
-        expression: "(${daily_user_metrics.revenue_d28} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d28} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d90
         label: ROI% D90
-        expression: "(${daily_user_metrics.revenue_d90} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d90} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.daily_spend_week]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.daily_country_spend_week]
       limit: '500'
       column_limit: '50'
       show_view_names: false
@@ -408,7 +408,7 @@
       conditional_formatting: [{type: low to high, value: !!null '', background_color: !!null '',
           font_color: !!null '', palette: {name: Red to White to Green, colors: ["#F36254",
               "#FFFFFF", "#4FBC89"]}, bold: false, italic: false, strikethrough: false}]
-      hidden_fields: [daily_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
+      hidden_fields: [daily_country_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
         daily_user_metrics.revenue_d07, daily_user_metrics.revenue_d14, daily_user_metrics.revenue_d21,
         daily_user_metrics.revenue_d28, daily_user_metrics.revenue_d90, daily_user_metrics.revenue_d03]
 
@@ -421,13 +421,13 @@
       type: looker_line
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_spend.daily_spend_week, daily_user_metrics.campaign_id]
+      dimensions: [daily_country_spend.daily_country_spend_week, daily_user_metrics.campaign_id]
       pivots: [daily_user_metrics.campaign_id]
-      fill_fields: [daily_spend.daily_spend_week]
+      fill_fields: [daily_country_spend.daily_country_spend_week]
       measures: [daily_user_metrics.total_revenue]
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.daily_spend_week, daily_user_metrics.campaign_id]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.daily_country_spend_week, daily_user_metrics.campaign_id]
       limit: '500'
       column_limit: '50'
       stacking: ''
@@ -460,28 +460,28 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types:
-        daily_spend.total_spend: area
+        daily_country_spend.total_spend: area
       colors: ['palette: Mixed Dark']
       series_colors:
         daily_user_metrics.total_new_users: "#33a02c"
-        daily_spend.total_spend: "#cbd9e1"
+        daily_country_spend.total_spend: "#cbd9e1"
 
     - name: weekly_spend_campaign
       title: Weekly Spend by Campaign
       type: looker_line
       model: tenjin
       explore: daily_user_metrics
-      dimensions: [daily_spend.daily_spend_week, daily_user_metrics.campaign_id]
+      dimensions: [daily_country_spend.daily_country_spend_week, daily_user_metrics.campaign_id]
       pivots: [daily_user_metrics.campaign_id]
-      fill_fields: [daily_spend.daily_spend_week]
-      measures: [daily_spend.total_spend]
+      fill_fields: [daily_country_spend.daily_country_spend_week]
+      measures: [daily_country_spend.total_spend]
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_user_metrics.campaign_id, daily_spend.daily_spend_week desc]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_user_metrics.campaign_id, daily_country_spend.daily_country_spend_week desc]
       limit: '500'
       column_limit: '50'
       stacking: ''
@@ -514,15 +514,15 @@
       conditional_formatting_include_totals: false
       conditional_formatting_include_nulls: false
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
       series_types:
-        daily_spend.total_spend: area
+        daily_country_spend.total_spend: area
       colors: ['palette: Mixed Dark']
       series_colors:
         daily_user_metrics.total_new_users: "#33a02c"
-        daily_spend.total_spend: "#cbd9e1"
+        daily_country_spend.total_spend: "#cbd9e1"
 
     - name: campaign_metrics
       title: Campaign Metrics
@@ -530,11 +530,11 @@
       model: tenjin
       explore: daily_user_metrics
       dimensions: [daily_user_metrics.campaign_id]
-      measures: [daily_spend.total_spend, daily_spend.total_installs, daily_user_metrics.total_new_users,
-        daily_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
+      measures: [daily_country_spend.total_spend, daily_country_spend.total_installs, daily_user_metrics.total_new_users,
+        daily_country_spend.cost_per_install, daily_user_metrics.cost_per_new_user]
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.total_spend desc]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.total_spend desc]
       limit: '500'
       column_limit: '50'
       show_view_names: false
@@ -567,8 +567,8 @@
       point_style: none
       interpolation: linear
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
         __FILE: tenjin/weekly_roi_dashboard.dashboard.lookml
         __LINE_NUM: 454
@@ -576,7 +576,7 @@
       colors: ['palette: Mixed Dark']
       series_colors:
         daily_user_metrics.total_new_users: "#33a02c"
-        daily_spend.total_spend: "#cbd9e1"
+        daily_country_spend.total_spend: "#cbd9e1"
         __FILE: tenjin/weekly_roi_dashboard.dashboard.lookml
         __LINE_NUM: 461
 
@@ -586,53 +586,53 @@
       model: tenjin
       explore: daily_user_metrics
       dimensions: [daily_user_metrics.campaign_id]
-      measures: [daily_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
+      measures: [daily_country_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
         daily_user_metrics.revenue_d03, daily_user_metrics.revenue_d07, daily_user_metrics.revenue_d14,
         daily_user_metrics.revenue_d21, daily_user_metrics.revenue_d28, daily_user_metrics.revenue_d90]
       dynamic_fields:
       - table_calculation: roi_d1
         label: ROI% D1
-        expression: "(${daily_user_metrics.revenue_d01} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d01} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d2
         label: ROI% D2
-        expression: "(${daily_user_metrics.revenue_d02} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d02} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d3
         label: ROI% D3
-        expression: "(${daily_user_metrics.revenue_d03} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d03} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d7
         label: ROI% D7
-        expression: "(${daily_user_metrics.revenue_d07} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d07} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d14
         label: ROI% D14
-        expression: "(${daily_user_metrics.revenue_d14} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d14} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d21
         label: ROI% D21
-        expression: "(${daily_user_metrics.revenue_d21} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d21} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d28
         label: ROI% D28
-        expression: "(${daily_user_metrics.revenue_d28} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d28} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       - table_calculation: roi_d90
         label: ROI% D90
-        expression: "(${daily_user_metrics.revenue_d90} - ${daily_spend.total_spend})/${daily_spend.total_spend}"
+        expression: "(${daily_user_metrics.revenue_d90} - ${daily_country_spend.total_spend})/${daily_country_spend.total_spend}"
         value_format:
         value_format_name: percent_1
       listen:
-        date: daily_spend.daily_spend_date
-      sorts: [daily_spend.total_spend desc]
+        date: daily_country_spend.daily_country_spend_date
+      sorts: [daily_country_spend.total_spend desc]
       limit: '500'
       column_limit: '50'
       show_view_names: false
@@ -665,8 +665,8 @@
       point_style: none
       interpolation: linear
       series_labels:
-        daily_spend.total_installs: Installs
-        daily_spend.total_spend: Spend
+        daily_country_spend.total_installs: Installs
+        daily_country_spend.total_spend: Spend
         daily_user_metrics.total_new_users: New Users
         __FILE: tenjin/weekly_roi_dashboard.dashboard.lookml
         __LINE_NUM: 562
@@ -676,10 +676,10 @@
       colors: ['palette: Mixed Dark']
       series_colors:
         daily_user_metrics.total_new_users: "#33a02c"
-        daily_spend.total_spend: "#cbd9e1"
+        daily_country_spend.total_spend: "#cbd9e1"
         __FILE: tenjin/weekly_roi_dashboard.dashboard.lookml
         __LINE_NUM: 570
-      hidden_fields: [daily_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
+      hidden_fields: [daily_country_spend.total_spend, daily_user_metrics.revenue_d01, daily_user_metrics.revenue_d02,
         daily_user_metrics.revenue_d03, daily_user_metrics.revenue_d07, daily_user_metrics.revenue_d14,
         daily_user_metrics.revenue_d21, daily_user_metrics.revenue_d28, daily_user_metrics.revenue_d90]
       conditional_formatting: [{type: low to high, value: !!null '', background_color: !!null '',
