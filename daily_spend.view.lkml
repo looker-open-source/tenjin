@@ -57,8 +57,8 @@ view: daily_spend {
 
   measure:  total_spend {
     type: sum
-    value_format_name: usd
-    sql:  ${spend}/100.0 ;;
+    value_format: "\"¥\"#,##0"
+    sql:  ${spend} ;;
   }
 
   measure: total_installs {
@@ -69,8 +69,7 @@ view: daily_spend {
   measure: cost_per_install {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
-    value_format_name: usd
-
+    value_format: "\"¥\"#,##0"
   }
 
   measure:  total_impressions {
@@ -87,7 +86,7 @@ view: daily_spend {
     type: number
     label: "CPC"
     sql: ${total_spend}::float/NULLIF(${total_clicks},0) ;;
-    value_format_name: decimal_2
+    value_format: "\"¥\"#,##0"
   }
 
   measure: click_through_rate {
