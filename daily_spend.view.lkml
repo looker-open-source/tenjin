@@ -66,13 +66,13 @@ view: daily_spend {
     type: sum
     value_format: "\"¥\"#,##0"
     sql:  ${spend};;
-    label: "Cost"
+    label: "COST"
   }
 
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
-    label: "CVs(Media)"
+    label: "CV(Media)"
   }
 
   measure: cost_per_install {
@@ -85,13 +85,13 @@ view: daily_spend {
   measure:  total_impressions {
     type:  sum
     sql: ${impressions} ;;
-    label: "IMPs"
+    label: "IMP"
   }
 
   measure: total_clicks {
     type:  sum
     sql: ${clicks} ;;
-    label: "CLs"
+    label: "CLICK"
   }
 
   measure: cost_per_click {

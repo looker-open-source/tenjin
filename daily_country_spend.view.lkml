@@ -81,46 +81,46 @@ view: daily_country_spend {
     type: sum
     value_format: "\"¥\"#,##0"
     sql:  ${spend};;
-    label: "Cost"
+    label: "COST"
   }
 
   measure:  total_spend_usd {
     type: sum
     value_format_name: "usd"
     sql:  ${spend_usd};;
-    label: "Cost"
+    label: "COST"
   }
 
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
-    label: "CVs(Media)"
+    label: "CV(Media)"
   }
 
   measure: cost_per_install {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
     value_format: "\"¥\"#,##0"
-    label: "CPA(Media)"
+    label: "CPI(Media)"
   }
 
   measure: cost_per_install_usd {
     type: number
     sql: ${total_spend_usd}::float/NULLIF(${total_installs},0) ;;
     value_format_name: "usd"
-    label: "CPA(Media)"
+    label: "CPI(Media)"
   }
 
   measure:  total_impressions {
     type:  sum
     sql: ${impressions} ;;
-    label: "IMPs"
+    label: "IMP"
   }
 
   measure: total_clicks {
     type:  sum
     sql: ${clicks} ;;
-    label: "CLs"
+    label: "CLICK"
   }
 
   measure: cost_per_click {
