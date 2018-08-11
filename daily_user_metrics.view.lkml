@@ -1,27 +1,27 @@
 view: daily_user_metrics {
   derived_table: {
     sql: SELECT
-        date_add('hour', 9, acquired_at) ::DATE              AS date
+        acquired_at::DATE              AS date
       , country                        AS country
       , source_campaign_id             AS campaign_id
       , count(DISTINCT CASE WHEN event = 'open' and datediff('sec', acquired_at, created_at) < 86400 THEN advertising_id ELSE NULL END) AS new_users
       , count(distinct advertising_id) as users
       , count(distinct coalesce(advertising_id, developer_device_id)) as tracked_installs
       , sum(case when event_type = 'purchase' then revenue else 0 end) as revenue
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 = 1 then revenue else 0 end) as revenue_d1
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 2  then revenue else 0 end) as revenue_d2
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 3  then revenue else 0 end) as revenue_d3
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 7  then revenue else 0 end) as revenue_d7
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 14  then revenue else 0 end) as revenue_d14
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 21  then revenue else 0 end) as revenue_d21
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 28  then revenue else 0 end) as revenue_d28
-      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 >= 1 and date_diff('sec', acquired_at, created_at)/86400 <= 90  then revenue else 0 end) as revenue_d90
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 1 then revenue else 0 end) as revenue_d1
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 2  then revenue else 0 end) as revenue_d2
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 3  then revenue else 0 end) as revenue_d3
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 7  then revenue else 0 end) as revenue_d7
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 14  then revenue else 0 end) as revenue_d14
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 21  then revenue else 0 end) as revenue_d21
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 28  then revenue else 0 end) as revenue_d28
+      , sum(case when event_type = 'purchase'  and date_diff('sec', acquired_at, created_at)/86400 <= 90  then revenue else 0 end) as revenue_d90
       -- since country is more granular than campaign_id,
       -- we need to use the sum() window function to find the total acquired users for each campaign-day
       , sum(count(distinct advertising_id)) over (partition by acquired_at::date, source_campaign_id) as new_campaign_day_users
       , sum(count(distinct CASE WHEN event = 'open' and datediff('sec', acquired_at, created_at) < 86400 THEN advertising_id ELSE NULL END)) over (partition by acquired_at::date, source_campaign_id) as campaign_day_users
     FROM events
-    GROUP BY acquired_at, country, source_campaign_id
+    GROUP BY 1,2,3
  ;;
   }
 
