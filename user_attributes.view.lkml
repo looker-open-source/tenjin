@@ -1,5 +1,5 @@
 view: user_attributes {
-  sql_table_name: "883d44d664a54beb94e411f1a4e76004".user_attributes ;;
+  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".user_attributes ;;
 
   dimension_group: acquired {
     type: time

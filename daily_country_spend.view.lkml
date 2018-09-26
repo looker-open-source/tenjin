@@ -1,5 +1,5 @@
 view: daily_country_spend {
-  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_country_spend ;;
+  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".daily_country_spend ;;
 
   dimension: id {
     primary_key: yes
@@ -47,24 +47,8 @@ view: daily_country_spend {
   dimension: spend {
     type: number
     hidden: yes
-    sql: CASE
-          WHEN ${agency_margin.type} = 0
-            THEN spend /(1-coalesce(${agency_margin.agency_margin},0.15))
-          WHEN ${agency_margin.type} = 1
-            THEN spend * (1 + coalesce(${agency_margin.agency_margin},0.15))
-          END;;
+    sql: ${TABLE}.spend;;
     }
-
-  dimension: spend_usd {
-    type: number
-    hidden: yes
-    sql: CASE
-          WHEN ${agency_margin.type} = 0
-            THEN spend/112.0 /(1-coalesce(${agency_margin.agency_margin},0.15))
-          WHEN ${agency_margin.type} = 1
-            THEN spend/112.0 * (1 + coalesce(${agency_margin.agency_margin},0.15))
-          END;;
-  }
 
   dimension_group: updated {
     type: time
@@ -79,36 +63,22 @@ view: daily_country_spend {
 
   measure:  total_spend {
     type: sum
-    value_format: "\"¥\"#,##0"
-    sql:  ${spend};;
-    label: "COST"
-  }
-
-  measure:  total_spend_usd {
-    type: sum
     value_format_name: "usd"
-    sql:  ${spend_usd};;
+    sql:  ${spend}/100.0;;
     label: "COST"
   }
 
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
-    label: "CV(Media)"
+    label: "CV"
   }
 
   measure: cost_per_install {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
-    value_format: "\"¥\"#,##0"
-    label: "CPI(Media)"
-  }
-
-  measure: cost_per_install_usd {
-    type: number
-    sql: ${total_spend_usd}::float/NULLIF(${total_installs},0) ;;
     value_format_name: "usd"
-    label: "CPI(Media)"
+    label: "CPI"
   }
 
   measure:  total_impressions {
@@ -126,13 +96,6 @@ view: daily_country_spend {
   measure: cost_per_click {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_clicks},0) ;;
-    value_format: "\"¥\"#,##0"
-    label: "CPC"
-  }
-
-  measure: cost_per_click_usd {
-    type: number
-    sql: ${total_spend_usd}::float/NULLIF(${total_clicks},0) ;;
     value_format_name: "usd"
     label: "CPC"
   }

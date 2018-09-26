@@ -24,18 +24,6 @@ explore: daily_country_spend {
     sql_on: ${campaigns.app_id} = ${apps.id} ;;
     relationship: many_to_one
   }
-
-  join: advertisers {
-    type: left_outer
-    sql_on: ${apps.bundle_id} = ${advertisers.bundle_id} and ${apps.platform} = ${advertisers.platform} ;;
-    relationship: many_to_one
-  }
-
-  join: agency_margin {
-    type: left_outer
-    sql_on: ${advertisers.advertiser_id} = ${agency_margin.advertiser_id};;
-    relationship: many_to_one
-  }
 }
 explore: daily_user_metrics {
 
@@ -62,18 +50,6 @@ explore: daily_user_metrics {
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
-
-  join: advertisers {
-    type: left_outer
-    sql_on: ${apps.bundle_id} = ${advertisers.bundle_id} and ${apps.platform} = ${advertisers.platform} ;;
-    relationship: many_to_one
-  }
-
-  join: agency_margin {
-    type: left_outer
-    sql_on: ${advertisers.advertiser_id} = ${agency_margin.advertiser_id};;
     relationship: many_to_one
   }
 }
@@ -112,11 +88,6 @@ explore: events {
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
-  join: user_event_facts {
-    type: left_outer
-    sql_on: ${events.advertising_id} = ${user_event_facts.advertising_id} ;;
     relationship: many_to_one
   }
 }

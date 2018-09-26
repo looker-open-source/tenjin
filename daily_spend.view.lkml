@@ -1,5 +1,5 @@
 view: daily_spend {
-  sql_table_name: "883d44d664a54beb94e411f1a4e76004".daily_spend
+  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".daily_spend
     ;;
 
   dimension: id {
@@ -64,22 +64,22 @@ view: daily_spend {
 
   measure:  total_spend {
     type: sum
-    value_format: "\"¥\"#,##0"
-    sql:  ${spend};;
+    value_format_name: "usd"
+    sql:  ${spend}/100.0;;
     label: "COST"
   }
 
   measure: total_installs {
     type:  sum
     sql:  ${installs} ;;
-    label: "CV(Media)"
+    label: "CV"
   }
 
   measure: cost_per_install {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_installs},0) ;;
-    value_format: "\"¥\"#,##0"
-    label: "CPA(Media)"
+    value_format_name: "usd"
+    label: "CPI"
   }
 
   measure:  total_impressions {
@@ -97,7 +97,7 @@ view: daily_spend {
   measure: cost_per_click {
     type: number
     sql: ${total_spend}::float/NULLIF(${total_clicks},0) ;;
-    value_format: "\"¥\"#,##0"
+    value_format_name: "usd"
     label: "CPC"
   }
 

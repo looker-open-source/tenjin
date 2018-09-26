@@ -55,7 +55,7 @@ view: daily_user_metrics {
   measure: cost_per_new_user {
     type: number
     sql: ${daily_country_spend.total_spend}::float/NULLIF(${total_new_users},0) ;;
-    value_format: "\"¥\"#,##0"
+    value_format_name: "usd"
     }
 
   measure: users {
@@ -66,28 +66,21 @@ view: daily_user_metrics {
   measure: tracked_installs {
     type: sum
     sql: ${TABLE}.tracked_installs ;;
-    label: "CV(SDK)"
+    label: "CV"
   }
 
   measure: cost_per_tracked_install {
     type: number
-    value_format: "\"¥\"#,##0"
-    sql: ${daily_country_spend.total_spend}::float/NULLIF(${tracked_installs},0) ;;
-    label: "CPI(SDK)"
-  }
-
-  measure: cost_per_tracked_install_usd {
-    type: number
     value_format_name: "usd"
-    sql: ${daily_country_spend.total_spend_usd}::float/NULLIF(${tracked_installs},0) ;;
-    label: "CPI(SDK)"
+    sql: ${daily_country_spend.total_spend}::float/NULLIF(${tracked_installs},0) ;;
+    label: "CPI"
   }
 
   measure: tracked_installs_per_click {
     type: number
     value_format_name: percent_2
     sql: ${daily_country_spend.total_clicks}::float/NULLIF(${tracked_installs},0) ;;
-    label: "CVR(SDK)"
+    label: "CVR"
   }
 
   dimension: new_campaign_day_users {

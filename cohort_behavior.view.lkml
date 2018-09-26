@@ -1,5 +1,5 @@
 view: cohort_behavior {
-  sql_table_name: "883d44d664a54beb94e411f1a4e76004".cohort_behavior ;;
+  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".cohort_behavior ;;
 
   dimension: campaign_id {
     type: string
