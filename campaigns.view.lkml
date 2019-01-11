@@ -1,5 +1,5 @@
 view: campaigns {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".campaigns ;;
+  sql_table_name: tenjin.campaigns ;;
 
   dimension: remote_campaign_id {
     primary_key: yes
