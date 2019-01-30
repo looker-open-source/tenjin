@@ -1,5 +1,5 @@
 view: publisher_apps {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".publisher_apps ;;
+  sql_table_name: tenjin.publisher_apps ;;
 
   dimension: id {
     primary_key: yes

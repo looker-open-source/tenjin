@@ -1,5 +1,5 @@
 view: daily_spend {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".daily_spend
+  sql_table_name: tenjin.daily_spend
     ;;
 
   dimension: id {

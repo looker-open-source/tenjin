@@ -1,5 +1,5 @@
 view: campaigns_targeting_tags {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".campaigns_targeting_tags ;;
+  sql_table_name: tenjin.campaigns_targeting_tags ;;
 
   dimension: campaign_id {
     type: string

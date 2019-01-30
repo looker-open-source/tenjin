@@ -1,5 +1,5 @@
 view: targeting_tags {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".targeting_tags ;;
+  sql_table_name: tenjin.targeting_tags ;;
 
   dimension: id {
     primary_key: yes

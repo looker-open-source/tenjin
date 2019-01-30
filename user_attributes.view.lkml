@@ -1,5 +1,5 @@
 view: user_attributes {
-  sql_table_name: "467b3f825dfd2fbc67cb350cd0fea7d3".user_attributes ;;
+  sql_table_name: tenjin.user_attributes ;;
 
   dimension_group: acquired {
     type: time

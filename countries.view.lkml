@@ -6,6 +6,7 @@ view: countries {
     sql: ${TABLE}.code ;;
   }
 
+
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
